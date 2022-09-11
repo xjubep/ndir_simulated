@@ -1,0 +1,8 @@
+faiss-gpu
+numpy
+tqdm
+opencv-contrib-python-headless
+albumentations
+torchsummary
+timm
+ptflops
