@@ -51,8 +51,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Extract frame feature')
     parser.add_argument('--root_path', type=str, default='/mldisk/nfs_shared_/VCDB_simulated/simulated_frame_db')
     parser.add_argument('--feature_path', type=str, default='/hdd/sy/VCDB_simulated/features/test2')
-    parser.add_argument('--model', type=str, default='hybrid_vit')
-    parser.add_argument('--checkpoint', type=bool, default=False)
+    parser.add_argument('--model', type=str, default='desc_1st')
+    parser.add_argument('--checkpoint', type=bool, default=True)
 
     parser.add_argument('--batch', type=int, default=1024)
     parser.add_argument('--worker', type=int, default=8)
@@ -73,10 +73,10 @@ if __name__ == '__main__':
         checkpoint = '/workspace/ckpts/res26_vits32_fivr_triplet.pth'
     elif args.model == 'mobilenet_avg':
         model = MobileNet_AVG()
-        checkpoint = '/workspace/data/mobilenet_avg_ep16_ckpt.pth'
+        checkpoint = '/workspace/ckpts/mobilenet_avg_ep16_ckpt.pth'
     elif args.model == 'desc_1st':
         model = EfficientNet()
-        checkpoint = '/workspace/data/iscnet_efficientnet_v2.pth.tar'
+        checkpoint = '/workspace/ckpts/efficientnet_v2_disc_contrastive.pth.tar'
     model.to(args.device)
 
     # Check device
@@ -106,12 +106,12 @@ if __name__ == '__main__':
     check_parameters = list(model.named_parameters())[-7]
     print(check_parameters[0], check_parameters[1][:10])
 
-    # transforms = ['origin', 'BlackBorder_01', 'BlackBorder_02', 'Brightness_01', 'Brightness_02', 'Brightness_03',
-    #               'Crop_01', 'Crop_02', 'Flip_H', 'Flip_V', 'GrayScale',
-    #               'Logo_01', 'Logo_02', 'Logo_03', 'PIP',
-    #               'Rotation_01', 'Rotation_02', 'Rotation_03']
+    transforms = ['origin', 'BlackBorder_01', 'BlackBorder_02', 'Brightness_01', 'Brightness_02', 'Brightness_03',
+                  'Crop_01', 'Crop_02', 'Flip_H', 'Flip_V', 'GrayScale',
+                  'Logo_01', 'Logo_02', 'Logo_03', 'PIP',
+                  'Rotation_01', 'Rotation_02', 'Rotation_03']
 
-    transforms = ['origin']
+    # transforms = ['origin']
 
     for transform in transforms:
         extract_frame_features(model, transform, args)
