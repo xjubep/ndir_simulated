@@ -7,7 +7,7 @@ import torch
 
 
 def get_rank(transform, args):
-    f = open(f'{args.feature_path}/rank2.txt', 'a')
+    f = open(f'{args.feature_path}/rank.txt', 'a')
 
     db_path = f'{args.feature_path}/{transform}.pth'
     db_feat = torch.load(db_path).numpy()
@@ -33,7 +33,7 @@ def get_rank(transform, args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Get average rank with simulated dataset')
-    parser.add_argument('--feature_path', type=str, default='/hdd/sy/VCDB_simulated/features/hybrid_vit_triplet')
+    parser.add_argument('--feature_path', type=str, default='/hdd/sy/VCDB_simulated/features/test_neg_desc_1st')
     args = parser.parse_args()
 
     query_path = f'{args.feature_path}/origin.pth'
@@ -43,7 +43,9 @@ if __name__ == '__main__':
     transforms = ['BlackBorder_01', 'BlackBorder_02', 'Brightness_01', 'Brightness_02', 'Brightness_03',
                   'Crop_01', 'Crop_02', 'Flip_H', 'Flip_V', 'GrayScale',
                   'Logo_01', 'Logo_02', 'Logo_03', 'PIP',
-                  'Rotation_01', 'Rotation_02', 'Rotation_03']
+                  'Rotation_01', 'Rotation_02', 'Rotation_03',
+                  'multi_BrC', 'multi_BrL', 'multi_BrP',
+                  'multi_CL', 'multi_CP', 'multi_LP', 'multi_BrCP']
 
     for transform in transforms:
         get_rank(transform, args)

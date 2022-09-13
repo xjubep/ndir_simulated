@@ -5,10 +5,11 @@ from torch.utils.data import Dataset
 
 
 class SimulatedDataset(Dataset):
-    def __init__(self, img_paths):
+    def __init__(self, img_paths, img_size):
         self.img_paths = img_paths
+        self.img_size = img_size
         self.transform = A.Compose([
-            A.Resize(224, 224),
+            A.Resize(self.img_size, self.img_size),
             A.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
             ToTensorV2()
         ])
